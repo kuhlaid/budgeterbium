@@ -79,9 +79,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import Datepicker from 'vuejs-datepicker';
-import Multiselect from 'vue-multiselect';
+import { mapActions, mapGetters } from 'vuex'
+import Datepicker from 'vuejs-datepicker'
+import Multiselect from 'vue-multiselect'
 
 export default {
   name: 'transaction-create-update',
@@ -99,28 +99,28 @@ export default {
       debit: null,
       credit: null,
       editing: false
-    };
+    }
   },
 
   mounted () {
-    this.loadTransactions();
-    this.loadBudgets();
-    this.loadCategories();
-    this.loadAccounts();
-    this.loadBusinesses();
+    this.loadTransactions()
+    this.loadBudgets()
+    this.loadCategories()
+    this.loadAccounts()
+    this.loadBusinesses()
 
     if (this.value) {
-      this.transaction = Object.assign({}, this.value);
+      this.transaction = Object.assign({}, this.value)
 
       // we need the selected category, account, and business name and ID, but the object only holds their IDs by default
-      this.transaction.category = this.getCategoryById(this.transaction.category);
-      this.transaction.account = this.getAccountById(this.transaction.account);
-      this.transaction.business = this.getBusinessById(this.transaction.business);
+      this.transaction.category = this.getCategoryById(this.transaction.category)
+      this.transaction.account = this.getAccountById(this.transaction.account)
+      this.transaction.business = this.getBusinessById(this.transaction.business)
 
-      if (this.transaction.amount > 0) this.credit = this.transaction.amount;
-      else this.debit = this.transaction.amount;
+      if (this.transaction.amount > 0) this.credit = this.transaction.amount
+      else this.debit = this.transaction.amount
 
-      this.editing = true;
+      this.editing = true
     }
   },
 
@@ -152,8 +152,8 @@ export default {
           note: this.transaction.note,
           id: this.transaction.id
         }).then(() => {
-          this.$emit('updated-transaction', this.transaction);
-        });
+          this.$emit('updated-transaction', this.transaction)
+        })
       } else {
         this.createTransaction({
           account: this.transaction.account.id,
@@ -163,8 +163,8 @@ export default {
           note: this.transaction.note,
           date: this.transaction.date
         }).then(() => {
-          this.transaction = {};
-        });
+          this.transaction = {}
+        })
       }
     },
 
@@ -172,14 +172,14 @@ export default {
       // if using v-model and not using Vue.set directly, vue-multiselect seems to struggle to properly
       // keep its internal value up to date with the value in our component. So we're skipping v-model
       // and handling updates manually.
-      this.$set(this.transaction, name, obj);
+      this.$set(this.transaction, name, obj)
     },
 
     handleCreateBusiness (business) {
-      let newBusiness = { name: business };
+      let newBusiness = { name: business }
       this.createBusiness(newBusiness).then((val) => {
-        this.updateSelection('business', val);
-      });
+        this.updateSelection('business', val)
+      })
     }
   },
 
@@ -196,12 +196,12 @@ export default {
 
   watch: {
     credit: function (val) {
-      this.transaction.amount = Math.abs(val);
+      this.transaction.amount = Math.abs(val)
     },
 
     debit: function (val) {
-      this.transaction.amount = -Math.abs(val);
+      this.transaction.amount = -Math.abs(val)
     }
   }
-};
+}
 </script>

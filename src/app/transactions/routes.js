@@ -1,4 +1,4 @@
-import * as components from './components';
+import * as components from './components'
 
 export default [
   {
@@ -6,4 +6,4 @@ export default [
     name: 'transactionsList',
     component: components.TransactionsListView
   }
-];
+]

@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { moment } from '../../../filters';
-import { mapGetters } from 'vuex';
+import { moment } from '../../../filters'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'transaction',
@@ -33,5 +33,5 @@ export default {
       'getBusinessById'
     ])
   }
-};
+}
 </script>

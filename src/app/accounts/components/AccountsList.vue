@@ -22,7 +22,8 @@
       </thead>
       <tbody>
         <tr
-          v-for="account, key in accounts"
+          v-for="(account,key) in accounts"
+          v-bind:key="key"
           :class="{ 'is-delinquent': account.balance < 0 }"
         >
           <td>
@@ -42,8 +43,8 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
-import { CATEGORIES } from '../../../consts';
+import { mapState, mapActions } from 'vuex'
+import { CATEGORIES } from '../../../consts'
 
 export default {
   name: 'accounts-list-view',
@@ -51,11 +52,11 @@ export default {
   data () {
     return {
       categories: CATEGORIES
-    };
+    }
   },
 
   mounted () {
-    this.loadAccounts();
+    this.loadAccounts()
   },
 
   methods: {
@@ -66,7 +67,7 @@ export default {
 
     confirmDeleteAccount (account) {
       if (confirm(`Are you sure you want to delete ${account.name}?`)) {
-        this.deleteAccount(account);
+        this.deleteAccount(account)
       }
     }
   },
@@ -76,7 +77,7 @@ export default {
       'accounts': state => state.accounts.accounts
     })
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>

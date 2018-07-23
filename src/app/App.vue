@@ -13,14 +13,14 @@
 </template>
 
 <script>
-import { Navigation } from './navigation/components';
+import { Navigation } from './navigation/components'
 
 export default {
   name: 'app',
   components: {
     Navigation
   }
-};
+}
 </script>
 
 <style lang="scss">

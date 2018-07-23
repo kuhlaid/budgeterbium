@@ -5,7 +5,8 @@
         <router-link :to="{ name: 'accountsList' }">Accounts</router-link>
         <ul>
           <li
-            v-for="account in accounts"
+            v-for="(account,key) in accounts"
+            v-bind:key="key"
           >
             <router-link :to="{ name: 'updateAccount', params: { accountId: account.id } }">
               {{ account.name }} <span>${{ account.balance }}</span>
@@ -20,13 +21,13 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'navigation',
 
   mounted () {
-    this.loadAccounts();
+    this.loadAccounts()
   },
 
   methods: {
@@ -38,7 +39,7 @@ export default {
       accounts: state => state.accounts.accounts
     })
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>

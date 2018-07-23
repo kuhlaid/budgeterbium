@@ -23,7 +23,10 @@
           <p class="control">
             <span class="select">
               <select name="category" v-model="selectedAccount.category">
-                <option v-for="value, key in categories" :value="key">{{ value }}</option>
+                <option 
+                v-for="(value, key) in categories" :value="key"
+                v-bind:key="key"
+                >{{ value }}</option>
               </select>
             </span>
           </p>
@@ -55,8 +58,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import { CATEGORIES } from '../../../consts';
+import { mapActions, mapGetters } from 'vuex'
+import { CATEGORIES } from '../../../consts'
 
 export default {
   name: 'accounts-create-edit-view',
@@ -67,12 +70,12 @@ export default {
       categories: CATEGORIES,
       editing: false,
       selectedAccount: {}
-    };
+    }
   },
 
   mounted () {
     if (this.accountId) {
-      this.loadAccount();
+      this.loadAccount()
     }
   },
 
@@ -84,36 +87,36 @@ export default {
     ]),
 
     resetAndGo () {
-      this.selectedAccount = {};
-      this.$router.push({ name: 'accountsList' });
+      this.selectedAccount = {}
+      this.$router.push({ name: 'accountsList' })
     },
 
     saveNewAccount () {
       this.createAccount(this.selectedAccount).then(() => {
-        this.resetAndGo();
-      });
+        this.resetAndGo()
+      })
     },
 
     saveAccount () {
       this.updateAccount(this.selectedAccount).then(() => {
-        this.resetAndGo();
-      });
+        this.resetAndGo()
+      })
     },
 
     processSave () {
-      this.editing ? this.saveAccount() : this.saveNewAccount();
+      this.editing ? this.saveAccount() : this.saveNewAccount()
     },
 
     loadAccount () {
-      let vm = this;
+      let vm = this
       this.loadAccounts().then(() => {
-        let selectedAccount = vm.getAccountById(vm.accountId);
+        let selectedAccount = vm.getAccountById(vm.accountId)
         if (selectedAccount) {
-          vm.editing = true;
-          vm.selectedAccount = Object.assign({}, selectedAccount);
+          vm.editing = true
+          vm.selectedAccount = Object.assign({}, selectedAccount)
         }
       // TODO: the object does not exist, how do we handle this scenario?
-      });
+      })
     }
   },
 
@@ -126,16 +129,16 @@ export default {
   watch: {
     accountId (newId) {
       if (newId) {
-        this.loadAccount();
+        this.loadAccount()
       }
-      this.editing = false;
-      this.selectedAccount = {};
+      this.editing = false
+      this.selectedAccount = {}
     }
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>
-#accounts-create-edit-view {
-}
+// #accounts-create-edit-view {
+// }
 </style>
