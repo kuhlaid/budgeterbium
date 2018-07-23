@@ -63,14 +63,15 @@
         </thead>
         <tbody>
           <template
-            v-for="value, key in selectedBudget.budgetCategories"
+            v-for="(value,key) in selectedBudget.budgetCategories"
           >
             <component
               :is="budgetCategoryComponent(value)"
-              v-model="value"
+              v-bind:key="key"
               v-on:update-budget-category="saveBudgetCategory"
               v-on:edit-budget-category="activeBudgetCategory = value"
-            ></component>
+            ></component> 
+            <!-- removed the 'v-model="value"' as it was causing errors-->
           </template>
           <CreateUpdateBudgetCategory v-on:add-budget-category="addBudgetCategory"></CreateUpdateBudgetCategory>
         </tbody>
@@ -83,8 +84,9 @@
                 @change="processDuplicateBudget($event.target.value)"
               >
                 <option
-                  v-for="value, key in sortedBudgets"
-                  :value="value.id"
+                  v-for="(value, key) in sortedBudgets"
+                  :value="key"
+                  v-bind:key="value"
                 >
                   {{ value.month | moment }}
                 </option>
@@ -105,13 +107,13 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
-import Datepicker from 'vuejs-datepicker';
+import { mapActions, mapGetters, mapState } from 'vuex'
+import Datepicker from 'vuejs-datepicker'
 
-import CreateUpdateBudgetCategory from './CreateUpdateBudgetCategory';
-import BudgetCategory from './BudgetCategory';
-import { moment } from '../../../filters';
-import { sortObjects } from '../../../utils';
+import CreateUpdateBudgetCategory from './CreateUpdateBudgetCategory'
+import BudgetCategory from './BudgetCategory'
+import { moment } from '../../../filters'
+import { sortObjects } from '../../../utils'
 
 export default {
   name: 'budget-create-edit-view',
@@ -128,7 +130,7 @@ export default {
       editing: false,
       activeBudgetCategory: null,
       lastBudget: null
-    };
+    }
   },
 
   filters: {
@@ -138,12 +140,12 @@ export default {
   mounted () {
     if ('budgetId' in this.$route.params) {
       this.loadBudgets().then(() => {
-        let selectedBudget = this.getBudgetById(this.$route.params.budgetId);
+        let selectedBudget = this.getBudgetById(this.$route.params.budgetId)
         if (selectedBudget) {
-          this.editing = true;
-          this.selectedBudget = Object.assign({}, selectedBudget);
+          this.editing = true
+          this.selectedBudget = Object.assign({}, selectedBudget)
         }
-      });
+      })
     }
   },
 
@@ -158,32 +160,32 @@ export default {
     ]),
 
     resetAndGo () {
-      this.selectedBudget = {};
-      this.$router.push({ name: 'budgetsList' });
+      this.selectedBudget = {}
+      this.$router.push({ name: 'budgetsList' })
     },
 
     saveNewBudget () {
       this.createBudget(this.selectedBudget).then(() => {
-        this.resetAndGo();
+        this.resetAndGo()
       }).catch((err) => {
-        alert(err);
-      });
+        alert(err)
+      })
     },
 
     saveBudget () {
       this.updateBudget(this.selectedBudget).then(() => {
-        this.resetAndGo();
+        this.resetAndGo()
       }).catch((err) => {
-        alert(err);
-      });
+        alert(err)
+      })
     },
 
     processSave () {
-      this.$route.params.budgetId ? this.saveBudget() : this.saveNewBudget();
+      this.$route.params.budgetId ? this.saveBudget() : this.saveNewBudget()
     },
 
     addBudgetCategory (budgetCategory) {
-      if (!budgetCategory.category) return;
+      if (!budgetCategory.category) return
 
       this.createBudgetCategory({
         budget: this.selectedBudget,
@@ -193,23 +195,23 @@ export default {
           spent: 0
         }
       }).then(() => {
-        this.selectedBudget = Object.assign({}, this.getBudgetById(this.$route.params.budgetId));
-      });
+        this.selectedBudget = Object.assign({}, this.getBudgetById(this.$route.params.budgetId))
+      })
     },
 
     saveBudgetCategory (budgetCategory) {
       // format it how our action expects
-      budgetCategory.category = budgetCategory.category.id;
+      budgetCategory.category = budgetCategory.category.id
       this.updateBudgetCategory({
         budget: this.selectedBudget,
         budgetCategory: budgetCategory
       }).then(() => {
-        this.selectedBudget = Object.assign({}, this.getBudgetById(this.$route.params.budgetId));
-      });
+        this.selectedBudget = Object.assign({}, this.getBudgetById(this.$route.params.budgetId))
+      })
     },
 
     budgetCategoryComponent (budgetCategory) {
-      return this.activeBudgetCategory && this.activeBudgetCategory === budgetCategory ? 'create-update-budget-category' : 'budget-category';
+      return this.activeBudgetCategory && this.activeBudgetCategory === budgetCategory ? 'create-update-budget-category' : 'budget-category'
     },
 
     processDuplicateBudget (budgetId) {
@@ -218,8 +220,8 @@ export default {
           budget: this.selectedBudget,
           baseBudget: this.getBudgetById(budgetId)
         }).then((budget) => {
-          this.selectedBudget = budget;
-        });
+          this.selectedBudget = budget
+        })
       }
     }
   },
@@ -235,8 +237,8 @@ export default {
     }),
 
     sortedBudgets () {
-      return sortObjects(this.budgets, 'month', true);
+      return sortObjects(this.budgets, 'month', true)
     }
   }
-};
+}
 </script>

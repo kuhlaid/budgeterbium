@@ -21,15 +21,16 @@
       </thead>
       <tbody>
         <template
-          v-for="transaction, key in sortedTransactions"
+          v-for="(transaction) in sortedTransactions"
           :class="{ 'is-delinquent': false }"
         >
           <component
             :is="transactionComponent(transaction)"
-            v-model="transaction"
+            v-bind:key="transaction"
             v-on:updated-transaction="activeTransaction = null"
             v-on:edit-transaction="activeTransaction = transaction"
           ></component>
+          <!-- removed 'v-model="transaction"' as it was causing issues-->
         </template>
         <CreateUpdateTransaction></CreateUpdateTransaction>
       </tbody>
@@ -38,11 +39,11 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapState } from 'vuex'
 
-import CreateUpdateTransaction from './CreateUpdateTransaction';
-import Transaction from './Transaction';
-import { sortObjects } from '../../../utils';
+import CreateUpdateTransaction from './CreateUpdateTransaction'
+import Transaction from './Transaction'
+import { sortObjects } from '../../../utils'
 
 export default {
   name: 'transactions-list',
@@ -55,11 +56,11 @@ export default {
   data () {
     return {
       activeTransaction: null
-    };
+    }
   },
 
   mounted () {
-    this.loadTransactions();
+    this.loadTransactions()
   },
 
   methods: {
@@ -71,9 +72,9 @@ export default {
 
     transactionComponent (transaction) {
       if (this.activeTransaction && this.activeTransaction === transaction) {
-        return 'CreateUpdateTransaction';
+        return 'CreateUpdateTransaction'
       }
-      return 'Transaction';
+      return 'Transaction'
     }
   },
 
@@ -83,13 +84,13 @@ export default {
     }),
 
     sortedTransactions () {
-      return sortObjects(this.transactions, 'date', false);
+      return sortObjects(this.transactions, 'date', false)
     }
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>
-#transactions-list {
-}
+// #transactions-list {
+// }
 </style>

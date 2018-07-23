@@ -25,7 +25,8 @@
       </thead>
       <tbody>
         <tr
-          v-for="budget in sortedBudgets"
+          v-for="(budget) in sortedBudgets"
+          v-bind:key="budget"
           :class="{ 'is-delinquent': false }"
         >
           <td>
@@ -46,10 +47,10 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex'
 
-import { moment } from '../../../filters';
-import { sortObjects } from '../../../utils';
+import { moment } from '../../../filters'
+import { sortObjects } from '../../../utils'
 
 export default {
   name: 'budgets-list',
@@ -59,7 +60,7 @@ export default {
   },
 
   mounted () {
-    this.loadBudgets();
+    this.loadBudgets()
   },
 
   methods: {
@@ -74,13 +75,13 @@ export default {
     }),
 
     sortedBudgets () {
-      return sortObjects(this.budgets, 'month', true);
+      return sortObjects(this.budgets, 'month', true)
     }
   }
-};
+}
 </script>
 
 <style scoped lang='scss'>
-#budgets-list-view {
-}
+// #budgets-list-view {
+// }
 </style>

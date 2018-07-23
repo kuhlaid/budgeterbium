@@ -39,9 +39,9 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-import Multiselect from 'vue-multiselect';
-import 'vue-multiselect/dist/vue-multiselect.min.css';
+import { mapActions, mapGetters } from 'vuex'
+import Multiselect from 'vue-multiselect'
+import 'vue-multiselect/dist/vue-multiselect.min.css'
 
 export default {
   name: 'budget-category-create-edit-view',
@@ -58,18 +58,18 @@ export default {
     return {
       budgetCategory: {},
       editing: false
-    };
+    }
   },
 
   mounted () {
-    this.loadCategories();
+    this.loadCategories()
     if (this.value) {
-      this.budgetCategory = Object.assign({}, this.value);
+      this.budgetCategory = Object.assign({}, this.value)
 
       // we need the selected category name and ID, but the budgetCategory object only holds the ID by default
-      this.budgetCategory.category = this.getCategoryById(this.budgetCategory.category);
+      this.budgetCategory.category = this.getCategoryById(this.budgetCategory.category)
 
-      this.editing = true;
+      this.editing = true
     }
   },
 
@@ -83,25 +83,25 @@ export default {
       // we are passing the saves up to the budget because this budget
       // category view isn't aware of its parent budget object
       if (this.editing) {
-        this.$emit('update-budget-category', this.budgetCategory);
+        this.$emit('update-budget-category', this.budgetCategory)
       } else {
-        this.$emit('add-budget-category', this.budgetCategory);
-        this.budgetCategory = {};
+        this.$emit('add-budget-category', this.budgetCategory)
+        this.budgetCategory = {}
       }
     },
 
     handleCreateCategory (category) {
-      let newCategory = { name: category };
+      let newCategory = { name: category }
       this.createCategory(newCategory).then((val) => {
-        this.updateCategorySelection(val);
-      });
+        this.updateCategorySelection(val)
+      })
     },
 
     updateCategorySelection (category) {
       // if using v-model and not using Vue.set directly, vue-multiselect seems to struggle to properly
       // keep its internal value up to date with the value in our component. So we're skipping v-model
       // and handling updates manually.
-      this.$set(this.budgetCategory, 'category', category);
+      this.$set(this.budgetCategory, 'category', category)
     }
   },
 
@@ -111,5 +111,5 @@ export default {
       'getCategoryById'
     ])
   }
-};
+}
 </script>

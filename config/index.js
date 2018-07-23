@@ -1,5 +1,7 @@
+'use strict'
+
 // see http://vuejs-templates.github.io/webpack for documentation.
-var path = require('path')
+const path = require('path')
 
 module.exports = {
   build: {
@@ -7,7 +9,8 @@ module.exports = {
     index: path.resolve(__dirname, '../dist/index.html'),
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/budgeterbium/',
+    // wpg - change the following path to reflect the path on production where the app files will reside
+    assetsPublicPath: '/e03/vue/budget-pwa/',
     productionSourceMap: true,
     // Gzip off by default as many popular static hosts such as
     // Surge or Netlify already gzip all static assets for you.
